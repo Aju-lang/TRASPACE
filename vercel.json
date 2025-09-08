@@ -1,0 +1,51 @@
+{
+  "version": 2,
+  "name": "traspace-cosmos-hub",
+  "builds": [
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/next",
+      "config": {
+        "projectSettings": {
+          "framework": "nextjs",
+          "buildCommand": "npm run build",
+          "outputDirectory": ".next"
+        }
+      }
+    },
+    {
+      "src": "backend/package.json", 
+      "use": "@vercel/next",
+      "config": {
+        "projectSettings": {
+          "framework": "nextjs",
+          "buildCommand": "npm run build",
+          "outputDirectory": ".next"
+        }
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/backend/app/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/$1"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "frontend/app/**": {
+      "runtime": "nodejs18.x"
+    },
+    "backend/app/**": {
+      "runtime": "nodejs18.x"
+    }
+  }
+}
+
+
